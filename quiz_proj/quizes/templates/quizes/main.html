@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block scripts %}
+<script src="{% static 'quizes/main.js' %}" defer></script>
+<!--Атрибут defer указывает браузеру, что скрипт должен быть выполнен после того, как HTML-документ будет полностью разобран-->
+{% endblock scripts %}
+
+{% block title %}
+Главная
+{% endblock title %}
+
+{% block content %}
+<!--список квизов-->
+<!--<hr>-->
+<!--<br>-->
+
+<!-- Button trigger modal -->
+<!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
+<!--  Launch demo modal-->
+<!--</button>-->
+
+<!-- Modal -->
+<div class="modal fade" id="quizStartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Начинаем?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modal-body-confirm"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
+        <button type="button" id="start-button" class="btn btn-success">Да, вперёд!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="h1">СПИСОК КВИЗОВ</div>
+<hr>
+{% for obj in object_list %}
+    <button
+            class="btn btn-link modal-button"
+            data-pk="{{obj.pk}}"
+            data-quiz="{{obj.name}}"
+            data-questions="{{obj.number_of_questions}}"
+            data-difficulty="{{obj.difficulty}}"
+            data-time="{{obj.time}}"
+            data-pass="{{obj.required_to_pass}}"
+            data-bs-toggle="modal"
+            data-bs-target="#quizStartModal">{{obj.name}}</button>
+<br>
+{% endfor %}
+
+{% endblock content %}
